@@ -34,3 +34,22 @@ const getWorkoutPlanById = (req, res) => {
 
   res.status(200).json(plan);
 };
+
+// Post
+const createWorkoutPlan = (req, res) => {
+  const { usuario_id, fecha_creacion, comentarios } = req.body;
+
+  if (!usuario_id || !fecha_creacion || !comentarios) {
+    return res.status(400).json({ error: "Todos los campos son requeridos" });
+  }
+
+  const newPlan = {
+    id: `${Date.now()}`,
+    usuario_id,
+    fecha_creacion,
+    comentarios
+  };
+
+  workoutPlans.push(newPlan);
+  res.status(201).json(newPlan);
+};
