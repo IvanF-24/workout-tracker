@@ -10,9 +10,20 @@ let workoutExercises = [
   }
 ];
 
-//Get
+// GET /workoutExercises?plan_id=2001&ejercicio_id=101
 const getAllWorkoutExercises = (req, res) => {
-  res.status(200).json(workoutExercises);
+  const { plan_id, ejercicio_id } = req.query;
+  let result = workoutExercises;
+
+  if (plan_id) {
+    result = result.filter(w => w.plan_id == plan_id);
+  }
+
+  if (ejercicio_id) {
+    result = result.filter(w => w.ejercicio_id == ejercicio_id);
+  }
+
+  res.status(200).json(result);
 };
 
 //Get:id

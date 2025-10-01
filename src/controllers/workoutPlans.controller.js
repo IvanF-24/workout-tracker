@@ -7,7 +7,7 @@ let workoutPlans = [
   }
 ];
 
-// Get all workout plans
+// Get 
 const getWorkoutPlans = (req, res) => {
   const { usuario_id, search } = req.query;
   let result = workoutPlans;

@@ -11,9 +11,22 @@ let workoutSchedules = [
   }
 ];
 
-// GET /workoutSchedules
+// GET /workoutSchedules?usuario_id=1&estado=pendiente
 const getWorkoutSchedules = (req, res) => {
-  res.status(200).json(workoutSchedules);
+  const { usuario_id, estado } = req.query;
+  let result = workoutSchedules;
+
+  if (usuario_id) {
+    result = result.filter(s => String(s.usuario_id) === String(usuario_id));
+  }
+
+  if (estado) {
+    result = result.filter(s =>
+      String(s.estado).toLowerCase() === String(estado).toLowerCase()
+    );
+  }
+
+  res.status(200).json(result);
 };
 
 // GET /workoutSchedules/:id
