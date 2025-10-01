@@ -1,6 +1,3 @@
-const express = require("express");
-const router = express.Router();
-
 // Estado en memoria (simulación)
 let workoutExercises = [
   {
@@ -13,13 +10,13 @@ let workoutExercises = [
   }
 ];
 
-// 📌 GET /workoutExercises → listar todos
-router.get("/", (req, res) => {
+//Get
+const getAllWorkoutExercises = (req, res) => {
   res.status(200).json(workoutExercises);
-});
+};
 
-// 📌 GET /workoutExercises/:id → buscar por ID
-router.get("/:id", (req, res) => {
+//Get:id
+const getWorkoutExerciseById = (req, res) => {
   const { id } = req.params;
   const workoutExercise = workoutExercises.find(w => w.id == id);
 
@@ -28,18 +25,20 @@ router.get("/:id", (req, res) => {
   }
 
   res.status(200).json(workoutExercise);
-});
+};
 
-// 📌 POST /workoutExercises → crear nuevo
-router.post("/", (req, res) => {
+//Post
+const createWorkoutExercise = (req, res) => {
   const { plan_id, ejercicio_id, series, repeticiones, peso } = req.body;
 
   if (!plan_id || !ejercicio_id || !series || !repeticiones) {
-    return res.status(400).json({ error: "Campos requeridos: plan_id, ejercicio_id, series, repeticiones" });
+    return res
+      .status(400)
+      .json({ error: "Campos requeridos: plan_id, ejercicio_id, series, repeticiones" });
   }
 
   const newWorkoutExercise = {
-    id: Date.now(), // id temporal
+    id: Date.now(),
     plan_id,
     ejercicio_id,
     series,
@@ -49,10 +48,10 @@ router.post("/", (req, res) => {
 
   workoutExercises.push(newWorkoutExercise);
   res.status(201).json(newWorkoutExercise);
-});
+};
 
-// 📌 PUT /workoutExercises/:id → actualizar
-router.put("/:id", (req, res) => {
+//Put:ID
+const updateWorkoutExercise = (req, res) => {
   const { id } = req.params;
   const { plan_id, ejercicio_id, series, repeticiones, peso } = req.body;
 
@@ -62,7 +61,9 @@ router.put("/:id", (req, res) => {
   }
 
   if (!plan_id || !ejercicio_id || !series || !repeticiones) {
-    return res.status(400).json({ error: "Campos requeridos: plan_id, ejercicio_id, series, repeticiones" });
+    return res
+      .status(400)
+      .json({ error: "Campos requeridos: plan_id, ejercicio_id, series, repeticiones" });
   }
 
   workoutExercises[index] = {
@@ -75,10 +76,10 @@ router.put("/:id", (req, res) => {
   };
 
   res.status(200).json(workoutExercises[index]);
-});
+};
 
-// 📌 DELETE /workoutExercises/:id → eliminar
-router.delete("/:id", (req, res) => {
+//Delete:ID
+const deleteWorkoutExercise = (req, res) => {
   const { id } = req.params;
   const index = workoutExercises.findIndex(w => w.id == id);
 
@@ -88,6 +89,12 @@ router.delete("/:id", (req, res) => {
 
   const deleted = workoutExercises.splice(index, 1);
   res.status(200).json({ deleted: deleted[0].id });
-});
+};
 
-module.exports = router;
+module.exports = {
+  getAllWorkoutExercises,
+  getWorkoutExerciseById,
+  createWorkoutExercise,
+  updateWorkoutExercise,
+  deleteWorkoutExercise
+};
