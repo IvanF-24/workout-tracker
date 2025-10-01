@@ -27,9 +27,24 @@ const getWorkoutReportById = (req, res) => {
   res.status(200).json(report);
 };
 
-// GET /workoutReports
+// GET /workoutReports?usuario_id=1&fecha_inicio=2025-08-01&fecha_fin=2025-08-31
 const getWorkoutReports = (req, res) => {
-  res.status(200).json(workoutReports);
+  const { usuario_id, fecha_inicio, fecha_fin } = req.query;
+  let result = workoutReports;
+
+  if (usuario_id) {
+    result = result.filter(r => r.usuario_id == usuario_id);
+  }
+
+  if (fecha_inicio) {
+    result = result.filter(r => r.fecha_inicio >= fecha_inicio);
+  }
+
+  if (fecha_fin) {
+    result = result.filter(r => r.fecha_fin <= fecha_fin);
+  }
+
+  res.status(200).json(result);
 };
 
 // POST /workoutReports
