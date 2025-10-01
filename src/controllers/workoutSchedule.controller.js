@@ -69,3 +69,24 @@ const updateWorkoutSchedule = (req, res) => {
 
   res.status(200).json(workoutSchedules[index]);
 };
+
+// DELETE /workoutSchedules/:id
+const deleteWorkoutSchedule = (req, res) => {
+  const { id } = req.params;
+  const index = workoutSchedules.findIndex(s => s.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ error: "WorkoutSchedule no encontrado" });
+  }
+
+  const deleted = workoutSchedules.splice(index, 1);
+  res.status(200).json({ deleted: deleted[0].id });
+};
+
+module.exports = {
+  getWorkoutSchedules,
+  getWorkoutScheduleById,
+  createWorkoutSchedule,
+  updateWorkoutSchedule,
+  deleteWorkoutSchedule
+};
