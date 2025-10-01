@@ -27,3 +27,24 @@ const getWorkoutScheduleById = (req, res) => {
 
   res.status(200).json(schedule);
 };
+
+// POST /workoutSchedules
+const createWorkoutSchedule = (req, res) => {
+  const { plan_id, usuario_id, fecha_hora, estado } = req.body;
+
+  if (!plan_id || !usuario_id || !fecha_hora) {
+    return res.status(400).json({ error: "plan_id, usuario_id y fecha_hora son requeridos" });
+  }
+
+  const newSchedule = {
+    id: `${Date.now()}`, // id único
+    plan_id,
+    usuario_id,
+    fecha_hora,
+    estado: estado || "pendiente"
+  };
+
+  workoutSchedules.push(newSchedule);
+
+  res.status(201).json(newSchedule);
+};
