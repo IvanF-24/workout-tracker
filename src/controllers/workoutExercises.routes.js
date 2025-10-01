@@ -50,3 +50,29 @@ router.post("/", (req, res) => {
   workoutExercises.push(newWorkoutExercise);
   res.status(201).json(newWorkoutExercise);
 });
+
+// 📌 PUT /workoutExercises/:id → actualizar
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const { plan_id, ejercicio_id, series, repeticiones, peso } = req.body;
+
+  const index = workoutExercises.findIndex(w => w.id == id);
+  if (index === -1) {
+    return res.status(404).json({ error: "WorkoutExercise no encontrado" });
+  }
+
+  if (!plan_id || !ejercicio_id || !series || !repeticiones) {
+    return res.status(400).json({ error: "Campos requeridos: plan_id, ejercicio_id, series, repeticiones" });
+  }
+
+  workoutExercises[index] = {
+    ...workoutExercises[index],
+    plan_id,
+    ejercicio_id,
+    series,
+    repeticiones,
+    peso
+  };
+
+  res.status(200).json(workoutExercises[index]);
+});
