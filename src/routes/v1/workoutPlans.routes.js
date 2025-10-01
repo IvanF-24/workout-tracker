@@ -72,3 +72,21 @@ const updateWorkoutPlan = (req, res) => {
   res.status(200).json(workoutPlans[index]);
 };
 
+// Delete
+const deleteWorkoutPlan = (req, res) => {
+  const { id } = req.params;
+  const index = workoutPlans.findIndex(p => p.id === id);
+
+  if (index === -1) return res.status(404).json({ error: "Plan no encontrado" });
+
+  const deleted = workoutPlans.splice(index, 1);
+  res.status(200).json({ deleted: deleted[0].id });
+};
+
+module.exports = {
+  getWorkoutPlans,
+  getWorkoutPlanById,
+  createWorkoutPlan,
+  updateWorkoutPlan,
+  deleteWorkoutPlan
+};
