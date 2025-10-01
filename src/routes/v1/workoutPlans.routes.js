@@ -53,3 +53,22 @@ const createWorkoutPlan = (req, res) => {
   workoutPlans.push(newPlan);
   res.status(201).json(newPlan);
 };
+
+//Put
+const updateWorkoutPlan = (req, res) => {
+  const { id } = req.params;
+  const { usuario_id, fecha_creacion, comentarios } = req.body;
+
+  const index = workoutPlans.findIndex(p => p.id === id);
+  if (index === -1) return res.status(404).json({ error: "Plan no encontrado" });
+
+  workoutPlans[index] = {
+    ...workoutPlans[index],
+    usuario_id,
+    fecha_creacion,
+    comentarios
+  };
+
+  res.status(200).json(workoutPlans[index]);
+};
+
