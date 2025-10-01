@@ -1,12 +1,12 @@
-const express = require("express"); // Import express
-const router = express.Router(); // Create a router instance
+const express = require("express");
+const router = express.Router();
 
+// importar rutas específicas
+const usersRoutes = require("./users.routes");
+const exercisesRoutes = require("./exercises.routes");
 
-//importar rutas especificas 
-const usersRoutes = require('./users.routes');
+// configuración de rutas
+router.use("/users", usersRoutes);
+router.use("/exercises", exercisesRoutes);
 
-//Configuracion de rutas
-router.use('/users', usersRoutes);
-
-module.exports = router; // Export the router
-
+module.exports = router;
