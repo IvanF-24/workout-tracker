@@ -75,3 +75,24 @@ const updateWorkoutReport = (req, res) => {
 
   res.status(200).json(workoutReports[index]);
 };
+
+// DELETE /workoutReports/:id
+const deleteWorkoutReport = (req, res) => {
+  const { id } = req.params;
+  const index = workoutReports.findIndex(r => r.id == id);
+
+  if (index === -1) {
+    return res.status(404).json({ error: "Reporte no encontrado" });
+  }
+
+  const deletedReport = workoutReports.splice(index, 1);
+  res.status(200).json({ deleted: deletedReport[0].id });
+};
+
+module.exports = {
+  getWorkoutReports,
+  getWorkoutReportById,
+  createWorkoutReport,
+  updateWorkoutReport,
+  deleteWorkoutReport
+};
