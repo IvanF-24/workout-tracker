@@ -29,3 +29,24 @@ router.get("/:id", (req, res) => {
 
   res.status(200).json(workoutExercise);
 });
+
+// 📌 POST /workoutExercises → crear nuevo
+router.post("/", (req, res) => {
+  const { plan_id, ejercicio_id, series, repeticiones, peso } = req.body;
+
+  if (!plan_id || !ejercicio_id || !series || !repeticiones) {
+    return res.status(400).json({ error: "Campos requeridos: plan_id, ejercicio_id, series, repeticiones" });
+  }
+
+  const newWorkoutExercise = {
+    id: Date.now(), // id temporal
+    plan_id,
+    ejercicio_id,
+    series,
+    repeticiones,
+    peso: peso || 0
+  };
+
+  workoutExercises.push(newWorkoutExercise);
+  res.status(201).json(newWorkoutExercise);
+});
