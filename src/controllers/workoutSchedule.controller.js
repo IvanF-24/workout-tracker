@@ -48,3 +48,24 @@ const createWorkoutSchedule = (req, res) => {
 
   res.status(201).json(newSchedule);
 };
+
+// PUT /workoutSchedules/:id
+const updateWorkoutSchedule = (req, res) => {
+  const { id } = req.params;
+  const { plan_id, usuario_id, fecha_hora, estado } = req.body;
+
+  const index = workoutSchedules.findIndex(s => s.id === id);
+  if (index === -1) {
+    return res.status(404).json({ error: "WorkoutSchedule no encontrado" });
+  }
+
+  workoutSchedules[index] = {
+    ...workoutSchedules[index],
+    plan_id,
+    usuario_id,
+    fecha_hora,
+    estado
+  };
+
+  res.status(200).json(workoutSchedules[index]);
+};
