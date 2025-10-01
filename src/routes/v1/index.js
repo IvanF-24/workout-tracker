@@ -4,9 +4,11 @@ const router = express.Router();
 // importar rutas específicas
 const usersRoutes = require("./users.routes");
 const exercisesRoutes = require("./exercises.routes");
+const workoutPlansRoutes = require("./workoutPlans.routes");
 
 // configuración de rutas
 router.use("/users", usersRoutes);
 router.use("/exercises", exercisesRoutes);
+router.use("/workoutPlans", workoutPlansRoutes);
 
 module.exports = router;
