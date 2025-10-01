@@ -15,3 +15,19 @@ let workoutReports = [
   }
 ];
 
+// GET /workoutReports/:id
+const getWorkoutReportById = (req, res) => {
+  const { id } = req.params;
+  const report = workoutReports.find(r => r.id == id);
+
+  if (!report) {
+    return res.status(404).json({ error: "Reporte no encontrado" });
+  }
+
+  res.status(200).json(report);
+};
+
+// GET /workoutReports
+const getWorkoutReports = (req, res) => {
+  res.status(200).json(workoutReports);
+};
