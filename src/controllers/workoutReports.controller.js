@@ -31,3 +31,25 @@ const getWorkoutReportById = (req, res) => {
 const getWorkoutReports = (req, res) => {
   res.status(200).json(workoutReports);
 };
+
+// POST /workoutReports
+const createWorkoutReport = (req, res) => {
+  const { usuario_id, fecha_inicio, fecha_fin, total_entrenamientos, ejercicios_mas_frecuentes, mejora_por_grupo_muscular } = req.body;
+
+  if (!usuario_id || !fecha_inicio || !fecha_fin) {
+    return res.status(400).json({ error: "usuario_id, fecha_inicio y fecha_fin son requeridos" });
+  }
+
+  const newReport = {
+    id: Date.now(),
+    usuario_id,
+    fecha_inicio,
+    fecha_fin,
+    total_entrenamientos: total_entrenamientos || 0,
+    ejercicios_mas_frecuentes: ejercicios_mas_frecuentes || [],
+    mejora_por_grupo_muscular: mejora_por_grupo_muscular || {}
+  };
+
+  workoutReports.push(newReport);
+  res.status(201).json(newReport);
+};
